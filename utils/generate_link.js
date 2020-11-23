@@ -5,7 +5,7 @@ function sample(array) {
 }
 
 // define generateLink function
-function generateLink(links) {
+function generateLink() {
   // define things user might want
   const lowerCaseLetters = 'abcdefghijklmnopqrstuvwxyz'
   const upperCaseLetters = lowerCaseLetters.toUpperCase()
@@ -21,8 +21,7 @@ function generateLink(links) {
   }
 
   // return the generated link
-  if(!link === links)
-  return link
+  return `${link}`
 }
 
 module.exports = generateLink

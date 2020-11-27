@@ -1,11 +1,12 @@
 // define sample function to randomly return an item in an array
-function sample(array) {
+function sample (array) {
   const index = Math.floor(Math.random() * array.length)
   return array[index]
 }
 
 // define generateLink function
-function generateLink() {
+function generateLink () {
+  const PORT = process.env.PORT || 3000
   // define things user might want
   const lowerCaseLetters = 'abcdefghijklmnopqrstuvwxyz'
   const upperCaseLetters = lowerCaseLetters.toUpperCase()
@@ -13,7 +14,7 @@ function generateLink() {
   const pool = lowerCaseLetters + upperCaseLetters + numbers
   // create a collection to store things user picked up
   let collection = []
-    collection = collection.concat(pool.split(''))
+  collection = collection.concat(pool.split(''))
   // start generating link
   let link = ''
   for (let i = 0; i < 5; i++) {
@@ -21,7 +22,7 @@ function generateLink() {
   }
 
   // return the generated link
-  return `${link}`
+  return `http://localhost:${PORT}/${link}`
 }
 
-module.exports = generateLink
+module.exports = generateLink()

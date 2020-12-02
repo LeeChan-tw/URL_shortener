@@ -9,16 +9,15 @@ router.get('/', (req, res) => {
   res.render('index')
 })
 
-// 定義首頁路由
+// 定義主功能路由
 router.post('/', (req, res) => {
-  // 用解構賦值寫法從 req.body 拿出表單裡的資料
   const originLink = req.body.originLink
   Link.findOne({ originLink })
     .lean()
     .then(link => {
-      if (link) {
+      if (link) { // 如果已經有轉換過，就調用資料庫記錄
         res.render('index', { originLink, shortenLink: link.shortenLink })
-      } else {
+      } else { // 如果還沒轉換過，就新增
         const shortenLink = generateLink
         Link.create({ originLink, shortenLink })
           .then((link) => {

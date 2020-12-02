@@ -2,6 +2,8 @@
 const express = require('express')
 const app = express()
 const PORT = process.env.PORT || 3000
+// 增加靜態檔案 圖片
+app.use(express.static('public'))
 // 引用路由器
 const routes = require('./routes')
 // 載入express-handlebars

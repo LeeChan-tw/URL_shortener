@@ -29,7 +29,7 @@ router.post('/', (req, res) => {
 })
 
 router.get('/:shortenLink', (req, res) => {
-  const shortenLink = `http://localhost:3000/${req.params.shortenLink}`
+  const shortenLink = `https://short88.herokuapp.com/${req.params.shortenLink}`
   Link.findOne({ shortenLink })
     .lean()
     .then((link) => res.redirect(link.originLink))

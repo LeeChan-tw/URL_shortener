@@ -6,7 +6,6 @@ function sample (array) {
 
 // define generateLink function
 function generateLink () {
-  const PORT = process.env.PORT || 3000
   // define things user might want
   const lowerCaseLetters = 'abcdefghijklmnopqrstuvwxyz'
   const upperCaseLetters = lowerCaseLetters.toUpperCase()
@@ -22,7 +21,7 @@ function generateLink () {
   }
 
   // return the generated link
-  return `http://localhost:${PORT}/${link}`
+  return `https://short88.herokuapp.com/${link}`
 }
 
 module.exports = generateLink()

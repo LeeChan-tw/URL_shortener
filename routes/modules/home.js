@@ -29,7 +29,7 @@ router.post('/', (req, res) => {
 })
 
 router.get('/:shortenLink', (req, res) => {
-  const shortenLink = `https://short88.herokuapp.com/${req.params.shortenLink}`
+  const shortenLink = `${process.env.protocol}://${process.env.domain}/${req.params.shortenLink}`
   Link.findOne({ shortenLink })
     .lean()
     .then((link) => res.redirect(link.originLink))

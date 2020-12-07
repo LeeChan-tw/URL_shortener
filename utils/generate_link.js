@@ -21,7 +21,7 @@ function generateLink () {
   }
 
   // return the generated link
-  return `https://short88.herokuapp.com/${link}`
+  return `${process.env.protocol}://${process.env.domain}/${link}`
 }
 
 module.exports = generateLink()

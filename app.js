@@ -26,9 +26,11 @@ app.use(bodyParser.urlencoded({ extended: true }))
 // 將 request 導入路由器
 app.use(routes)
 
-app.listen(PORT, () => {
+app.listen(PORT, (req) => {
   console.log(`App is running on ${PROTOCOL}://${DOMAIN}:${PORT}`)
   console.log(process.env.PORT)
   console.log(process.env.PROTOCOL)
   console.log(process.env.DOMAIN)
+  console.log(process.env)
+
 })

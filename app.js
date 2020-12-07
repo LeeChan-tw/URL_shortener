@@ -2,8 +2,7 @@
 const express = require('express')
 const app = express()
 const PORT = process.env.PORT || 3000
-const PROTOCOL = process.env.PROTOCOL || 'http'
-const DOMAIN = process.env.DOMAIN || 'localhost'
+const ROOTDOMAIN = process.env.ROOTDOMAIN || 'http://localhost'
 // 增加靜態檔案 圖片
 app.use(express.static('public'))
 // 引用路由器
@@ -27,10 +26,7 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(routes)
 
 app.listen(PORT, (req) => {
-  console.log(`App is running on ${PROTOCOL}://${DOMAIN}:${PORT}`)
-  console.log(process.env.PORT)
-  console.log(process.env.PROTOCOL)
-  console.log(process.env.DOMAIN)
+  console.log(`App is running on ${ROOTDOMAIN}:${PORT}`)
+  console.log(process.env.ROOTDOMAIN)
   console.log(process.env)
-
 })

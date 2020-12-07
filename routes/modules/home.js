@@ -34,6 +34,7 @@ router.get('/:shortenLink', (req, res) => {
   Link.findOne({ shortenLink })
     .lean()
     .then((link) => res.redirect(link.originLink))
+    .catch(error => console.log(error))
 })
 
 // 匯出路由模組

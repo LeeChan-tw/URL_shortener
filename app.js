@@ -28,4 +28,7 @@ app.use(routes)
 
 app.listen(PORT, () => {
   console.log(`App is running on ${PROTOCOL}://${DOMAIN}:${PORT}`)
+  console.log(process.env.PORT)
+  console.log(process.env.PROTOCOL)
+  console.log(process.env.DOMAIN)
 })

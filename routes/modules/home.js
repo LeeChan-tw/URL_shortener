@@ -3,6 +3,7 @@ const express = require('express')
 const router = express.Router()
 const Link = require('../../models/link')
 const generateLink = require('../../utils/generate_link')
+const ROOTDOMAIN = process.env.ROOTDOMAIN || 'http://localhost'
 
 // 定義首頁路由
 router.get('/', (req, res) => {
@@ -29,7 +30,7 @@ router.post('/', (req, res) => {
 })
 
 router.get('/:shortenLink', (req, res) => {
-  const shortenLink = `${process.env.protocol}://${process.env.domain}/${req.params.shortenLink}`
+  const shortenLink = `${ROOTDOMAIN}/${req.params.shortenLink}`
   Link.findOne({ shortenLink })
     .lean()
     .then((link) => res.redirect(link.originLink))

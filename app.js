@@ -2,8 +2,8 @@
 const express = require('express')
 const app = express()
 const PORT = process.env.PORT || 3000
-const PROTOCOL = process.env.PROTOCOL || 'http'
-const DOMAIN = process.env.DOMAIN || 'localhost'
+const PROTOCOL = process.env.protocol || 'http'
+const DOMAIN = process.env.domain || 'localhost'
 // 增加靜態檔案 圖片
 app.use(express.static('public'))
 // 引用路由器

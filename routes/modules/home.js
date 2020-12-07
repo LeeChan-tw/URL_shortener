@@ -31,6 +31,7 @@ router.post('/', (req, res) => {
 
 router.get('/:shortenLink', (req, res) => {
   const shortenLink = `${ROOTDOMAIN}/${req.params.shortenLink}`
+  this.link = { originLink: [] }
   Link.findOne({ shortenLink })
     .lean()
     .then((link) => res.redirect(link.originLink))

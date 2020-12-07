@@ -11,7 +11,7 @@ function generateLink () {
   const upperCaseLetters = lowerCaseLetters.toUpperCase()
   const numbers = '1234567890'
   const pool = lowerCaseLetters + upperCaseLetters + numbers
-  const ROOTDOMAIN = process.env.ROOTDOMAIN || 'http://localhost'
+  const ROOTDOMAIN = process.env.ROOTDOMAIN || 'http://localhost:3000'
   // create a collection to store things user picked up
   let collection = []
   collection = collection.concat(pool.split(''))

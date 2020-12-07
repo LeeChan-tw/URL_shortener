@@ -27,6 +27,4 @@ app.use(routes)
 
 app.listen(PORT, (req) => {
   console.log(`App is running on ${ROOTDOMAIN}:${PORT}`)
-  console.log(process.env.ROOTDOMAIN)
-  console.log(process.env)
 })

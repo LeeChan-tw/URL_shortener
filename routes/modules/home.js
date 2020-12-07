@@ -3,7 +3,7 @@ const express = require('express')
 const router = express.Router()
 const Link = require('../../models/link')
 const generateLink = require('../../utils/generate_link')
-const ROOTDOMAIN = process.env.ROOTDOMAIN || 'http://localhost'
+const ROOTDOMAIN = process.env.ROOTDOMAIN || 'http://localhost:3000'
 
 // 定義首頁路由
 router.get('/', (req, res) => {

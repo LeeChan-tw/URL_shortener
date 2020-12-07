@@ -13,5 +13,6 @@ db.on('error', () => {
 // 連線成功
 db.once('open', () => {
   console.log('mongodb connected!')
+  console.log(MONGODB_URI)
 })
 module.exports = db

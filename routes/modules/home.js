@@ -12,17 +12,27 @@ router.get('/', (req, res) => {
 
 // 定義主功能路由
 router.post('/', (req, res) => {
-  const originLink = req.body.originLink
-  Link.findOne({ originLink })
-    .lean()
+  const originLink = req.body.originLink // 先抓住表單送出的網址
+  Link.findOne({ originLink }) // 再以該網址於資料庫內搜尋
+    .lean() // 調整資料格式
     .then(link => {
+      console.log('1st:', link)
       if (link) { // 如果已經有轉換過，就調用資料庫記錄
         res.render('index', { originLink, shortenLink: link.shortenLink })
-      } else { // 如果還沒轉換過，就新增
-        const shortenLink = generateLink
-        Link.create({ originLink, shortenLink })
-          .then((link) => {
-            res.render('index', { originLink: link.originLink, shortenLink: link.shortenLink })
+      } else { // 如果還沒轉換過，就啟動generateLink函式來新增一筆資料
+        let shortenLink = generateLink
+        Link.findOne({ shortenLink }) // 再以該網址於資料庫內搜尋
+          .lean() // 調整資料格式
+          .then(link => {
+            console.log('2st:', link)
+            if (link) { // 如果曾經使用過，就再次調動generateLink函式來新增一筆資料
+              shortenLink = generateLink
+            } else { // 如果未曾使用過，就以此為新資料
+              Link.create({ originLink, shortenLink })
+                .then(link => {
+                  res.render('index', { originLink: link.originLink, shortenLink: link.shortenLink })
+                })
+            }
           })
       }
     })
@@ -31,10 +41,9 @@ router.post('/', (req, res) => {
 
 router.get('/:shortenLink', (req, res) => {
   const shortenLink = `${ROOTDOMAIN}/${req.params.shortenLink}`
-  this.link = { originLink: [] }
   Link.findOne({ shortenLink })
     .lean()
-    .then((link) => res.redirect(link.originLink))
+    .then((link) => console.log('3st:', link))
     .catch(error => console.log(error))
 })
 

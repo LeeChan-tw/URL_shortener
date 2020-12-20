@@ -18,15 +18,15 @@ router.post('/', (req, res) => {
     .lean()
     .then(link => {
       console.log('1st:', link)
-      if (!link) { // 如果已經有轉換過，就調用資料庫記錄
+      if (!link) { // 如果還沒轉換過，就啟動generateLink函式來新增一筆
         Link.create({ originLink, shortenLink })
           .then(link => {
             res.render('index', { originLink, shortenLink })
           })
           .catch(error => console.log(error))
-      } else if (link.originLink === originLink) { // 如果還沒轉換過，就啟動generateLink函式來新增一筆資料
+      } else if (link.originLink === originLink) { // 如果已經有輸入過此原網址，就調用資料庫記錄資料
         res.render('index', { originLink: link.originLink, shortenLink: link.shortenLink })
-      } else if (link.shortenLink === shortenLink) {
+      } else if (link.shortenLink === shortenLink) { // 如果已經有產生過此短網址，就重新產生短網址，再新增此筆資料
         let checkDupe
         do {
           shortenLink = generateLink()

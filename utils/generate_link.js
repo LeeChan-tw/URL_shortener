@@ -25,4 +25,4 @@ function generateLink () {
   return `${ROOTDOMAIN}/${link}`
 }
 
-module.exports = generateLink()
+module.exports = generateLink

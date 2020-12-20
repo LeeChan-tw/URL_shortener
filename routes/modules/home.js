@@ -21,7 +21,7 @@ router.post('/', (req, res) => {
       if (!link) { // 如果還沒轉換過，就啟動generateLink函式來新增一筆
         Link.create({ originLink, shortenLink })
           .then(link => {
-            res.render('index', { originLink, shortenLink })
+            res.render('index', { originLink: link.originLink, shortenLink: link.shortenLink })
           })
           .catch(error => console.log(error))
       } else if (link.originLink === originLink) { // 如果已經有輸入過此原網址，就調用資料庫記錄資料
@@ -34,7 +34,7 @@ router.post('/', (req, res) => {
         } while (checkDupe)
         Link.create({ originLink, shortenLink })
           .then(link => {
-            res.render('index', { originLink, shortenLink })
+            res.render('index', { originLink: link.originLink, shortenLink: link.shortenLink })
           })
           .catch(error => console.log(error))
       }

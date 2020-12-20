@@ -6,6 +6,9 @@
 * 使用者可以“點擊”縮短後的網址，轉址至原提供網址。
 * 使用者可以“複製”產生的新網址。
 
+## Heroku app網址：
+https://short88.herokuapp.com
+
 ## 畫面預覽：
 <img src="/public/images/readme_photo.jpg" alt="畫面預覽" width="50%"/>
 

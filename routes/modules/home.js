@@ -11,23 +11,40 @@ router.get('/', (req, res) => {
 })
 
 router.post('/', (req, res) => {
-  const originLink = req.body.originLink
-  const shortenLink = generateLink()
+  const { originLink } = req.body
+  let shortenLink = generateLink()
+  console.log('shortenLink:', shortenLink)
   Link.findOne()
     .or([{ originLink }, { shortenLink }])
+    .lean()
     .then(link => {
       console.log('Boolean:', Boolean(link))
       console.log('originLink:', originLink)
       console.log('shortenLink:', shortenLink)
       console.log('1st:', link)
-      if (link) { // 如果還沒轉換過，就啟動generateLink函式來新增一筆資料
-        console.log('Find Link:', link)
-        res.render('index', { originLink, shortenLink: link.shortenLink })
-      } else { // 如果已經有轉換過，就調用資料庫記錄
+      if (!link) { // 如果已經有轉換過，就調用資料庫記錄
         Link.create({ originLink, shortenLink })
           .then(link => {
             console.log('Create Link:', link)
-            res.render('index', { originLink: link.originLink, shortenLink })
+            res.render('index', { originLink, shortenLink })
+          })
+          .catch(error => console.log(error))
+      } else if (link.originLink === originLink) { // 如果還沒轉換過，就啟動generateLink函式來新增一筆資料
+        console.log('Find originLink:', link)
+        console.log('Find originLink:', link.shortenLink)
+        res.render('index', { originLink: link.originLink, shortenLink: link.shortenLink })
+      } else if (link.shortenLink === shortenLink) {
+        let checkDupe
+        do {
+          shortenLink = generateLink()
+          checkDupe = link.shortenLink === shortenLink
+          console.log(link.shortenLink)
+          console.log(shortenLink)
+        } while (checkDupe)
+        Link.create({ originLink, shortenLink })
+          .then(link => {
+            console.log('Create Link:', link)
+            res.render('index', { originLink, shortenLink })
           })
           .catch(error => console.log(error))
       }

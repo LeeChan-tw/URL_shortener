@@ -17,7 +17,7 @@ function generateLink () {
   collection = collection.concat(pool.split(''))
   // start generating link
   let link = ''
-  for (let i = 0; i < 1; i++) {
+  for (let i = 0; i < 5; i++) {
     link += sample(collection)
   }
 

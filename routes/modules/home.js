@@ -12,18 +12,18 @@ router.get('/', (req, res) => {
 
 router.post('/', (req, res) => {
   const { originLink } = req.body
-  Link.find()
+  Link.find() // 將全部資料取出
     .lean()
-    .then(links => {
+    .then(links => { // 比對資料陣列內物件
       const getLink = links.find(link => link.originLink === originLink)
-      if (getLink) { // 如果還沒轉換過，就啟動generateLink函式來新增一筆
+      if (getLink) { // 如果有找到以前的Link，就抓出來顯示
         res.render('index', { originLink: getLink.originLink, shortenLink: getLink.shortenLink })
-      } else {
+      } else { // 如果沒有就準備新增資料進資料庫
         let shortenLink
         do {
-          shortenLink = generateLink()
+          shortenLink = generateLink() // 如果新連結存在資料庫時，迴圈在產生新連結
         } while (links.some(link => link.shortenLink === shortenLink))
-        Link.create({ originLink, shortenLink })
+        Link.create({ originLink, shortenLink }) // 將新資料放入資料庫
           .then(() => res.render('index', { originLink, shortenLink }))
           .catch(error => console.log('Error', error))
       }

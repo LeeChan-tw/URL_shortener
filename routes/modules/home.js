@@ -27,8 +27,7 @@ router.post('/', (req, res) => {
           .then(() => res.render('index', { originLink, shortenLink }))
           .catch(error => console.log('Error', error))
       }
-
-})
+    })
 })
 
 router.get('/:shortenLink', (req, res) => {

@@ -12,34 +12,23 @@ router.get('/', (req, res) => {
 
 router.post('/', (req, res) => {
   const { originLink } = req.body
-  let shortenLink = generateLink()
-  Link.findOne()
-    .or([{ originLink }, { shortenLink }])
+  Link.find()
     .lean()
-    .then(link => {
-      console.log('1st:', link)
-      if (!link) { // 如果還沒轉換過，就啟動generateLink函式來新增一筆
-        Link.create({ originLink, shortenLink })
-          .then(link => {
-            res.render('index', { originLink, shortenLink })
-          })
-          .catch(error => console.log(error))
-      } else if (link.originLink === originLink) { // 如果已經有輸入過此原網址，就調用資料庫記錄資料
-        res.render('index', { originLink: link.originLink, shortenLink: link.shortenLink })
-      } else if (link.originLink !== originLink && link.shortenLink === shortenLink) { // 如果已經有產生過此短網址，就重新產生短網址，再新增此筆資料
-        let checkDupe
+    .then(links => {
+      const getLink = links.find(link => link.originLink === originLink)
+      if (getLink) { // 如果還沒轉換過，就啟動generateLink函式來新增一筆
+        res.render('index', { originLink: getLink.originLink, shortenLink: getLink.shortenLink })
+      } else {
+        let shortenLink
         do {
           shortenLink = generateLink()
-          checkDupe = link.shortenLink === shortenLink
-        } while (checkDupe)
+        } while (links.some(link => link.shortenLink === shortenLink))
         Link.create({ originLink, shortenLink })
-          .then(link => {
-            res.render('index', { originLink, shortenLink })
-          })
-          .catch(error => console.log(error))
+          .then(() => res.render('index', { originLink, shortenLink }))
+          .catch(error => console.log('Error', error))
       }
-    })
-    .catch(error => console.log('Error', error))
+
+})
 })
 
 router.get('/:shortenLink', (req, res) => {
